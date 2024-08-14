@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option csharp_namespace = "grpcCosmos";
+
+package cosmos;
+
+// The request message containing the user's credentials.
+message CosmosCredentials {
+  string accountEndpoint = 1;
+  string accountKey = 2;
+  string databaseName = 3;
+}
+
+// The response message containing data from Cosmos DB.
+message DataItem {
+  map<string, string> fields = 1;
+}
+
+message ContainerData {
+  repeated DataItem data = 1;
+}
+
+message ContainersResponse {
+  map<string, ContainerData> containersData = 1;
+}
+
+// The CosmosService definition.
+service CosmosService {
+  rpc GetContainersWithDataAndSchema(CosmosCredentials) returns (ContainersResponse);
+}
